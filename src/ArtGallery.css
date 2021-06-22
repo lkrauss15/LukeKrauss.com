@@ -1,0 +1,10 @@
+.ArtGallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  /* Consider making this something like 1550px */
+  max-width: 1910px;
+  margin-top: 50px;
+}

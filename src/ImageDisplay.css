@@ -1,0 +1,38 @@
+.ImageDisplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: transform 1s;
+}
+
+.ImageDisplay:hover {
+  z-index: 999;
+  transform: scale(1.1);
+}
+
+.imageContainer {
+  width: 512px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageDisplayImage {
+  width: 410px;
+  height: 410px;
+  filter: drop-shadow(5px 5px 5px rgb(19, 17, 8));
+  transition: filter 1s;
+}
+
+.imageDisplayImage:hover {
+  filter: drop-shadow(0px 0px 5px rgba(245, 222, 179, 0.301));
+}
+
+.artTitle {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: wheat;
+}

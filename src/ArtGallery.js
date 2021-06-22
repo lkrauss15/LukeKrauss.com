@@ -13,6 +13,11 @@ import torus from './assets/torus.png';
 import wheel from './assets/wheel.png';
 import ImageDisplay from './ImageDisplay';
 
+/**
+ * An entire art gallery to display with several images. There should only be one of these.
+ * 
+ * @returns An ArtGallery functional component
+ */
 function ArtGallery(props) {
     return (
       <div className="ArtGallery">

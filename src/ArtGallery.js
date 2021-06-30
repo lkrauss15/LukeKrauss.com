@@ -1,26 +1,64 @@
+import React from 'react';
 import './ArtGallery.css';
-import attractor from './assets/attractor.png';
-import beautiful from './assets/beautiful.png';
-import creator from './assets/creator.png';
-import eight from './assets/eight.png';
-import mirror from './assets/mirror.png';
-import plastic from './assets/plastic.png';
-import ribcage from './assets/ribcage.png';
-import sculpture from './assets/sculpture.png';
-import shattered from './assets/shattered.png';
-import something from './assets/something.png';
-import torus from './assets/torus.png';
-import wheel from './assets/wheel.png';
 import ImageDisplay from './ImageDisplay';
 
 /**
  * An entire art gallery to display with several images. There should only be one of these.
- * 
- * @returns An ArtGallery functional component
  */
-function ArtGallery(props) {
+class ArtGallery extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      imageDisplayData: [],
+      debug: undefined
+    }
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:3001/GetArtGalleryInfo", {
+      mode: "cors",
+      method: 'POST',
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((imageDisplayData) => {
+          const newImageDisplayData = [];
+
+          imageDisplayData.forEach(imageDisplayInfo => {
+            newImageDisplayData.push({
+              imageSource: imageDisplayInfo.imageSource,
+              artTitle: imageDisplayInfo.artTitle,
+            });
+          });
+          this.setState({imageDisplayData: newImageDisplayData});
+        })
+      }
+      //Do nothing if we receive some kind of error.
+    })
+  }
+
+  render() {
+    if (this.state.imageDisplayData.length === 0) {
+      if (this.state.debug)
+        return <p>{this.state.debug}</p>
+
+      return null;
+    }
+
     return (
       <div className="ArtGallery">
+        {this.state.imageDisplayData.map((imageDisplayInfo, idx) => (
+          <ImageDisplay key={idx} imageSource={imageDisplayInfo.imageSource} artTitle={imageDisplayInfo.artTitle}></ImageDisplay>
+        ))}
+      </div>
+    );
+  }
+
+}
+
+/*
+        <ImageDisplay imageSource={"/strange_attractor.png"} artTitle="strange attractor"></ImageDisplay>
+
         <ImageDisplay imageSource={attractor} artTitle="strange attractor"></ImageDisplay>
         <ImageDisplay imageSource={beautiful} artTitle="creating something beautiful"></ImageDisplay>
         <ImageDisplay imageSource={creator} artTitle="creator of the universe"></ImageDisplay>
@@ -33,8 +71,6 @@ function ArtGallery(props) {
         <ImageDisplay imageSource={something} artTitle="why there is something rather than nothing"></ImageDisplay>
         <ImageDisplay imageSource={torus} artTitle="a torus that does not belong"></ImageDisplay>
         <ImageDisplay imageSource={wheel} artTitle="the wheel of time turning in my mind"></ImageDisplay>
-      </div>
-    );
-  }
+*/
 
-  export default ArtGallery;
+export default ArtGallery;

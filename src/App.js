@@ -3,7 +3,7 @@ import ArtGallery from './ArtGallery';
 
 function App() {
   return (
-    <div class='App'>
+    <div className='App'>
       <ArtGallery></ArtGallery>
     </div>
   );

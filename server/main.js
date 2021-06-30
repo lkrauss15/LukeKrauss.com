@@ -6,20 +6,13 @@ const dir = path.join(__dirname, 'public/assets/');
 
 var server = http.createServer(function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  //res.setHeader('Access-Control-Allow-Origin', '*');
-  //res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  //res.setHeader("Access-Control-Allow-Headers", "access-control-allow-origin, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   switch (req.method) {
     case 'GET':
-      handleGetRequest(req, res);
-      break;
+      return handleGetRequest(req, res);
     case 'POST':
-      handlePostRequest(req, res);
-      break;
+      return handlePostRequest(req, res);
     case 'OPTIONS':
-      res.statusCode = 200;
-      res.end();
-      break;
+      return handleOptionsRequest(res);
     default:
       //Request method not supported
       res.statusCode = 501;
@@ -32,6 +25,13 @@ server.listen(3001, function () {
   console.log('Listening on http://localhost:3001/');
 });
 
+/**
+ * Handles an HTTP GET request and returns a response.
+ * 
+ * @param {http.ClientRequest} req HTTP request object
+ * @param {http.ServerResponse} res HTTP response object 
+ * @returns {http.ServerResponse} The result of calling res.end(...)
+ */
 function handleGetRequest(req, res) {
   const reqpath = req.url.toString().split('?')[0];
   
@@ -58,36 +58,77 @@ function handleGetRequest(req, res) {
   });
 }
 
+/**
+ * Handles an HTTP POST request and returns a response.
+ * 
+ * @param {http.ClientRequest} req HTTP request object
+ * @param {http.ServerResponse} res HTTP response object 
+ * @returns {http.ServerResponse} The result of calling res.end(...)
+ */
 function handlePostRequest(req, res) {
   const reqPath = req.url.toString().split('?')[0];
   const requestEndpoint = reqPath.substring(1);
   if (requestEndpoint === 'GetArtGalleryInfo') {
-
-    const files = fs.readdirSync(dir);
-    const jsonReturnObjs = [];
-
-    files.forEach((file) => {
-      jsonReturnObjs.push({
-        imageSource: file,
-        artTitle: filenameToArtTitle(file)
-      });
-    });
-
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify(jsonReturnObjs));
-
+    handleGetArtGalleryInfo(res)
   } else {
-    return constructForbiddenResponse(res, requestEndpoint);
+    return constructForbiddenResponse(res);
   }
 }
 
-function constructForbiddenResponse(res, test) {
-  res.statusCode = 403;
-  res.setHeader('Content-Type', 'text/plain');
-  return res.end('Forbidden ' + test);
+/**
+ * Handles an HTTP OPTIONS request and returns a response.
+ * An OPTIONS request may come in as a pre-flight CORS request, for example.
+ * 
+ * @param {http.ClientRequest} req HTTP request object
+ * @param {http.ServerResponse} res HTTP response object 
+ * @returns {http.ServerResponse} The result of calling res.end(...)
+ */
+function handleOptionsRequest(res) {
+  res.statusCode = 200;
+  return res.end();
 }
 
+/**
+ * Handles a 'GetArtGalleryInfo' POST request from the client.
+ * Gets a list of asset filenames (images) and returns them
+ * alongside a displayname for them.
+ * 
+ * @param {http.ClientRequest} res HTTP request object
+ * @returns {http.ServerResponse} The result of res.end(...)
+ */
+function handleGetArtGalleryInfo(res) {
+  const files = fs.readdirSync(dir);
+  const imageDisplayData = [];
+  files.forEach((file) => {
+    imageDisplayData.push({
+      imageSource: file,
+      artTitle: filenameToArtTitle(file)
+    });
+  });
+
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  return res.end(JSON.stringify(imageDisplayData));
+}
+
+/**
+ * Constructs an HTTP forbidden response for requests we don't allow.
+ * 
+ * @param {http.ClientRequest} res HTTP request object
+ * @returns {http.ServerResponse} The result of res.end(...)
+ */
+function constructForbiddenResponse(res) {
+  res.statusCode = 403;
+  res.setHeader('Content-Type', 'text/plain');
+  return res.end('Forbidden');
+}
+
+/**
+ * Given a filename, converts it to an art title for user display.
+ * 
+ * @param {string} filename the name of an image (artwork)
+ * @returns {string} A title based on the filename
+ */
 function filenameToArtTitle(filename) {
   return filename.substring(0, filename.length-4).replace(/_/g, " ");
 }

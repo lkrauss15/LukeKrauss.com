@@ -11,37 +11,46 @@ class ArtGallery extends React.Component {
     super();
     this.state = {
       imageDisplayData: [],
-      debug: undefined
     }
   }
 
+  /**
+   * Called when the component is inserted into the DOM successfully. 
+   * Good place to load data from the server :)
+   * More info: https://reactjs.org/docs/react-component.html#componentdidmount
+   */
   componentDidMount(){
     fetch("http://localhost:3001/GetArtGalleryInfo", {
-      mode: "cors",
       method: 'POST',
     }).then((response) => {
       if (response.status === 200) {
         response.json().then((imageDisplayData) => {
           const newImageDisplayData = [];
 
+          //Transform server response into local data array
           imageDisplayData.forEach(imageDisplayInfo => {
             newImageDisplayData.push({
               imageSource: imageDisplayInfo.imageSource,
               artTitle: imageDisplayInfo.artTitle,
             });
           });
+
           this.setState({imageDisplayData: newImageDisplayData});
         })
       }
-      //Do nothing if we receive some kind of error.
+
+      //Do nothing if we receive some kind of error (response code other than 200)
     })
   }
 
+  /**
+   * Code to actually render the component.
+   * 
+   * @returns {React.Component}
+   */
   render() {
+    //Don't try to render anything if we have no image display data
     if (this.state.imageDisplayData.length === 0) {
-      if (this.state.debug)
-        return <p>{this.state.debug}</p>
-
       return null;
     }
 

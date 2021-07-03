@@ -3,6 +3,7 @@ var http = require('http');
 var fs = require('fs')
 
 const dir = path.join(__dirname, 'public/assets/');
+const hashToFilenameMap = new Map();
 
 var server = http.createServer(function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -33,24 +34,32 @@ server.listen(3001, function () {
  * @returns {http.ServerResponse} The result of calling res.end(...)
  */
 function handleGetRequest(req, res) {
-  const reqpath = req.url.toString().split('?')[0];
-  
-  if (reqpath.length === 0 || reqpath === '/' || reqpath === '\\') {
+  let reqpath = req.url.toString().split('?')[0];
+
+  //Clear out beginning slash (if it exists)
+  if (reqpath.startsWith('/') || reqpath.startsWith('\\') ) {
+    reqpath = reqpath.substring(1);
+  }
+
+  //No request at all, or request parameter hasnt been mapped
+  if (reqpath.length === 0 || !hashToFilenameMap.has(reqpath)) {
     return constructForbiddenResponse(res);
   }
 
   //Only support PNG images
   const type = 'image/png';
 
-  const file = path.join(dir, reqpath);
+  const filename = hashToFilenameMap.get(reqpath);
+
+  const fullFilePath = path.join(dir, filename);
   //Try to open the file and serve it
-  const s = fs.createReadStream(file);
+  const s = fs.createReadStream(fullFilePath);
   s.on('open', function () {
       res.setHeader('Content-Type', type);
       s.pipe(res);
   });
 
-  //Return an error if we couldn't find the files
+  //Return an error if we couldn't find the files. Shouldn't probably happen.
   s.on('error', function () {
       res.setHeader('Content-Type', 'text/plain');
       res.statusCode = 404;
@@ -99,10 +108,18 @@ function handleOptionsRequest(res) {
 function handleGetArtGalleryInfo(res) {
   const files = fs.readdirSync(dir);
   const imageDisplayData = [];
-  files.forEach((file) => {
+  
+  const crypto = require('crypto');
+  files.forEach((filename) => {
+    //Don't really need this to be cryptographically secure, so just use md5
+    const hashedFilename = crypto.createHash('md5').update(filename).digest('hex');
+    if (!hashToFilenameMap.has(hashedFilename)) {
+      hashToFilenameMap.set(hashedFilename, filename);
+    }
+
     imageDisplayData.push({
-      imageSource: file,
-      artTitle: filenameToArtTitle(file)
+      imageSource: hashedFilename,
+      artTitle: filenameToArtTitle(filename)
     });
   });
 

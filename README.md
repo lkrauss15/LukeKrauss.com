@@ -9,16 +9,12 @@ The sample images I included are some that I generated with [BigSleep AI](https:
 
 ## Usage
 
-This is a very simple node app. Run the following to spin up the front-end image gallery
+This is a very simple node app. Run the following to build and spin up the website. 
 
 ```bash
 $ npm start
 ```
 
-Then, run the following command to spin up the corresponding server for image retrieval
-
-```bash
-$ node ./server/main.js
-```
+Then, you can navigate to it at http://localhost:3001/.
 
 That's it!

@@ -6,8 +6,9 @@
   align-items: center;
   /* Consider making this something like 1550px*/
   max-width: 1910px;
-  margin-top: 50px;
+  padding-top: 50px;
   
-  /* Add extra margin to prevent scale transform from adding blank area when scaling the bottom images */
-  margin-bottom: 25px; 
+  /* Add extra padding to prevent scale transform from adding blank area when scaling the bottom images */
+  padding-bottom: 25px; 
+  background-color: 	#303030;
 }

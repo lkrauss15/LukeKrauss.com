@@ -20,7 +20,7 @@ class ArtGallery extends React.Component {
    * More info: https://reactjs.org/docs/react-component.html#componentdidmount
    */
   componentDidMount(){
-    fetch("http://localhost:3001/GetArtGalleryInfo", {
+    fetch("http://localhost:3001/AiArtGallery/GetArtGalleryInfo", {
       method: 'POST',
     }).then((response) => {
       if (response.status === 200) {
@@ -30,7 +30,7 @@ class ArtGallery extends React.Component {
           //Transform server response into local data array
           imageDisplayData.forEach(imageDisplayInfo => {
             newImageDisplayData.push({
-              imageSource: imageDisplayInfo.imageSource,
+              artwork: imageDisplayInfo.artwork,
               artTitle: imageDisplayInfo.artTitle,
             });
           });
@@ -57,7 +57,7 @@ class ArtGallery extends React.Component {
     return (
       <div className="ArtGallery">
         {this.state.imageDisplayData.map((imageDisplayInfo, idx) => (
-          <ImageDisplay key={idx} imageSource={imageDisplayInfo.imageSource} artTitle={imageDisplayInfo.artTitle}></ImageDisplay>
+          <ImageDisplay key={idx} imageSource={"AiArtGallery/GetArtwork?artwork=" + imageDisplayInfo.artwork} artTitle={imageDisplayInfo.artTitle}></ImageDisplay>
         ))}
       </div>
     );

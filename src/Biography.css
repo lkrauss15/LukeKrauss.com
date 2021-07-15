@@ -1,0 +1,19 @@
+.Biography {
+    margin-top: 50px;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.biographyText {
+    font-family: system-ui;
+    font-size: 2em;
+    text-align: center;
+}
+
+.selfPortrait {
+    border-radius: 50%;
+    box-shadow: 3px 2px 20px 0px #0000006e;
+}

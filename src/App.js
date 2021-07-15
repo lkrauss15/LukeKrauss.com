@@ -1,6 +1,8 @@
 import './App.css';
 import ArtGallery from './ArtGallery';
+import Copyright from './Copyright'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import LandingPage from './LandingPage';
 
 function App() {
   return (
@@ -8,10 +10,13 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-            <p>TODO: Create Luke Krauss landing page here, cause this is now my website, bruh</p>
+            <LandingPage></LandingPage>
+            <Copyright></Copyright>
           </Route>
           <Route path='/AiArtGallery'>
+            <title>AI Art Gallery</title>
             <ArtGallery></ArtGallery>
+            <Copyright darkMode></Copyright>
           </Route>
         </Switch>
       </BrowserRouter>

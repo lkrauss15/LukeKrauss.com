@@ -1,0 +1,22 @@
+.Copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+}
+
+.copyrightText {
+    opacity: 0.5;
+}
+
+.copyrightLight {
+    background-color: #faf0be;
+}
+
+.copyrightDark {
+    background-color: 	#303030;
+}
+
+.copyrightDark .copyrightText {
+    color: wheat;
+}

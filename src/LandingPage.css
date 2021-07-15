@@ -1,0 +1,7 @@
+.LandingPage {
+    background-color: #faf0be;
+    height: 97vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

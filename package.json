@@ -13,7 +13,7 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start-client": "react-scripts start",
     "start": "npm run build && node server/main.js",

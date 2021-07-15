@@ -1,4 +1,5 @@
 import './ImageDisplay.css';
+import './ArtGallery.css';
 
 /**
  * A single image to display along with an image title.
@@ -11,9 +12,9 @@ function ImageDisplay(props) {
     return (
       <div className="ImageDisplay">
           <span className="imageContainer">
-          <img className="imageDisplayImage" src={props.imageSource}></img>
+            <img className="imageDisplayImage" src={props.imageSource}></img>
           </span>
-          <p className="artTitle">{props.artTitle}</p>
+          <p className="artTitle artGalleryText">{props.artTitle}</p>
       </div>
     );
   }

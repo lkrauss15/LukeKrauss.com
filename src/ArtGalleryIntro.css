@@ -1,0 +1,24 @@
+.ArtGalleryIntro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+}
+
+.artGalleryTitle {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+    margin-top: 0;
+}
+
+.artGalleryExplanation {
+    font-size: 1.2em;
+    margin-bottom: 3em;
+}
+
+.artGalleryTitle, .artGalleryExplanation {
+    font-family: Garamond, serif;
+}

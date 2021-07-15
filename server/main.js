@@ -1,9 +1,7 @@
 const path = require('path');
 const fs = require('fs')
 const express = require('express')
-const port = 3001;
-
-//TODO: multipage?
+const port = 8080;
 
 const artworkDirectory = path.join(__dirname, 'public/assets/images/artwork');
 const hashToFilenameMap = new Map();
@@ -16,6 +14,10 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 //Define specific gets before * get
 app.get('/AiArtGallery/GetArtwork', (req, res) => {
   return handleGetArtwork(req, res);
+});
+
+app.get('/Biography/SelfPortrait', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/assets/images/", "LukeKrauss.jpg"));
 });
 
 app.get('*', (req, res) => {

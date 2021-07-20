@@ -15,6 +15,6 @@ This is a very simple node app. Run the following to build and spin up the websi
 $ npm start
 ```
 
-Then, you can navigate to it at http://localhost:3001/.
+Then, you can navigate to it at http://localhost:8080/.
 
 That's it!

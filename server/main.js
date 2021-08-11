@@ -20,6 +20,10 @@ app.get('/Biography/SelfPortrait', (req, res) => {
   res.sendFile(path.join(__dirname, "public/assets/images/", "LukeKrauss.jpg"));
 });
 
+app.get('/Biography/Resume', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/assets/", "LukeKraussResume.pdf"));
+});
+
 app.get('*', (req, res) => {
   //React is a single page application. We always serve index.html.
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));

@@ -7,6 +7,21 @@
     align-items: center;
 }
 
+.biographyLinks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: -1em;
+    margin-bottom: 3em;
+}
+
+.biographyLinks a{
+    font-size: 1.5em;
+    margin-right: 0.5em;
+}
+
+
 .biographyText {
     font-family: system-ui;
     font-size: 2em;

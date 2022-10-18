@@ -5,10 +5,15 @@ function Biography(props) {
         <div className='Biography'>
             <img src='Biography/SelfPortrait' className='selfPortrait'></img>
             <p className='biographyText'>
-                Hey there! I'm Luke Krauss. I'm a developer and this is my website.
-                There isn't much here now, but I'll be adding more stuff soon. For now, check out
-                the links below for some stuff I've made. 
+                Hey there! I'm Luke Krauss, a full-stack developer. 
+                <br></br>
+                Welcome to my website.
             </p>
+            <div className='biographyLinks'>
+                <a href='/Biography/Resume' target='_blank'>Resume</a>
+                <a href='https://www.linkedin.com/in/lukekrauss/' target='_blank'>LinkedIn</a>
+                <a href='https://github.com/lkrauss15/' target='_blank'>GitHub</a>
+            </div>
         </div>
     )
 }
